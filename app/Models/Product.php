@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Number;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = ['category_id', 'sku', 'name', 'slug', 'describtion', 'price', 'stock', 'image_url'];
 
@@ -21,7 +22,7 @@ class Product extends Model
     protected function formattedPrice(): Attribute
     {
         return Attribute::make(
-            get: fn () => Number::currency($this->price, in: 'IDR', locale: 'id'),
+            get: fn() => Number::currency($this->price, in: 'IDR', locale: 'id'),
         );
     }
 }
