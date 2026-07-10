@@ -27,9 +27,7 @@ Route::get('/contact', function () {
     return view('users.contact');
 })->name('contact');
 
-Route::get('/cart', function () {
-    return view('users.cart');
-})->name('cart');
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
 
 Route::post('/cart/update/{id}/{action}', [CartController::class, 'updateQuantity'])->name('cart.update');
 Route::post('/cart/remove/{id}', [CartController::class, 'removeItem'])->name('cart.remove');

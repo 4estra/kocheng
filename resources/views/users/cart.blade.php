@@ -1,23 +1,15 @@
 <x-layout>
-    <div class="p-10">
+    <div class="">
         <h1 class="text-3xl font-bold mb-8">Your Shopping Cart</h1>
 
-        @php
-            $cart = session('cart', []);
-            $products = \App\Models\Product::whereIn('id', array_keys($cart))->get();
-            $grandTotal = 0;
-        @endphp
+        <div class="flex flex-col md:flex-row items-center gap-10">
 
-        <div class="flex flex-row gap-10">
-
-            <section class="flex flex-1 flex-col">
+            <section
+                class="flex flex-1 h-120 lg:h-156 overflow-auto flex-col ring-1 ring-secondary/10 rounded-xl p-4 gap-4 shadow">
                 @if (count($products) > 0)
                     @foreach ($products as $product)
                         @php
                             $quantity = $cart[$product->id];
-
-                            $subtotal = $product->price * $quantity;
-                            $grandTotal += $subtotal;
                         @endphp
                         <x-cart.cart-item :id="$product->id" :name="$product->name" :category="$product->category->name" :price="$product->formatted_price"
                             :quantity="$quantity" :image="'https://i.kym-cdn.com/photos/images/newsfeed/002/429/796/96c.gif'" />
@@ -35,11 +27,11 @@
                     <h2 class="text-xl font-bold mb-4">Order Summary</h2>
                     <div class="flex justify-between mb-2">
                         <span>Total Items:</span>
-                        <span>{{ array_sum($cart) }}</span>
+                        <span>{{ $totalItems }}</span>
                     </div>
                     <div class="flex justify-between mb-6 text-lg font-bold border-t pt-4">
                         <span>Grand Total:</span>
-                        <span class="text-primary">Rp {{ number_format($grandTotal, 0, ',', '.') }}</span>
+                        <span class="text-primary">{{ $formatedGrandtotal }}</span>
                     </div>
 
                     <a href="{{ route('checkout') }}"
