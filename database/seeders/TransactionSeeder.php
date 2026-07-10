@@ -6,7 +6,6 @@ use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\TransactionItem;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class TransactionSeeder extends Seeder
@@ -17,28 +16,28 @@ class TransactionSeeder extends Seeder
     public function run(): void
     {
         $customers = User::where('role', 'user')->get();
-            $products = Product::all();
+        $products = Product::all();
 
-            if ($customers->isEmpty() || $products->isEmpty()) {
-                return;
-            }
+        if ($customers->isEmpty() || $products->isEmpty()) {
+            return;
+        }
 
-            foreach ($customers as $customer) {
-                Transaction::factory(10)->create([
-                    'user_id' => $customer->id,
-                ])->each(function ($transaction) use ($products) {
-                    $this->createTransactionItems($transaction, $products);
-                });
-            }
-
-            Transaction::factory(5)->create([
-                'user_id' => fn() => $customers->random()->id,
+        foreach ($customers as $customer) {
+            Transaction::factory(10)->create([
+                'user_id' => $customer->id,
             ])->each(function ($transaction) use ($products) {
                 $this->createTransactionItems($transaction, $products);
             });
+        }
+
+        Transaction::factory(5)->create([
+            'user_id' => fn () => $customers->random()->id,
+        ])->each(function ($transaction) use ($products) {
+            $this->createTransactionItems($transaction, $products);
+        });
     }
 
-     private function createTransactionItems($transaction, $products): void
+    private function createTransactionItems($transaction, $products): void
     {
         $total = 0;
         $randomProducts = $products->random(rand(1, 3));

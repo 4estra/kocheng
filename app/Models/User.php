@@ -30,7 +30,8 @@ class User extends Authenticatable
         ];
     }
 
-    public function transactions() {
+    public function transactions()
+    {
         return $this->hasMany(Transaction::class);
     }
 }

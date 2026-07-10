@@ -4,7 +4,8 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "vite",
+        "format": "./vendor/bin/pint"
     },
     "devDependencies": {
         "@iconify/json": "^2.2.498",

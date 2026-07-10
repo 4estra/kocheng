@@ -19,8 +19,8 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'category_id' => \App\Models\Category::factory(),
-            'sku' => 'PRD-' . $this->faker->unique()->numberBetween(1000, 9999),
+            'category_id' => Category::factory(),
+            'sku' => 'PRD-'.$this->faker->unique()->numberBetween(1000, 9999),
             'name' => $this->faker->words(3, true),
             'price' => $this->faker->randomFloat(2, 5000, 150000),
             'stock' => $this->faker->numberBetween(5, 100),

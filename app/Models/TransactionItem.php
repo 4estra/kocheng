@@ -7,10 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class TransactionItem extends Model
 {
     protected $fillable = ['transaction_id', 'product_id', 'quantity', 'price_at_sale', 'subtotal'];
-    public function transaction() {
+
+    public function transaction()
+    {
         return $this->belongsTo(Transaction::class);
     }
-    public function product() {
+
+    public function product()
+    {
         return $this->belongsTo(Product::class);
     }
 }
