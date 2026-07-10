@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,9 +16,7 @@ Route::get('/', function () {
     return view('users.index');
 })->name('home');
 
-Route::get('/product', function () {
-    return view('users.product');
-})->name('product');
+Route::get('/products', [ProductController::class, 'index'])->name('product');
 
 Route::get('/about', function () {
     return view('users.about');

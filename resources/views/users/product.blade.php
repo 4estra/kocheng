@@ -9,68 +9,59 @@
 
             <div id="categories-wrapper" class="relative inline-block group">
 
-                <button
-                    class="categories flex items-center cursor-pointer border-t border-secondary/10 shadow rounded-2xl py-1.5 px-4 bg-neutral transition-all duration-300 group-[.menu-open]:rounded-b-none">
-                    Categories
-                    <span class="icon-[mdi--keyboard-arrow-down] text-xl transition-transform duration-300 ml-2"></span>
-                </button>
 
-                <div
-                    class="categories-option absolute flex shadow p-4 gap-2 transition-all duration-300 ease-in-out flex-col opacity-0 invisible -translate-y-2 w-full rounded-b-2xl   bg-neutral top-full left-0
+                @php
+                    $selectedCategories = request('categories', []);
+                @endphp
 
-    group-[.menu-open]:opacity-100 group-[.menu-open]:visible group-[.menu-open]:translate-y-0
-    ">
 
-                    <div class="border-b border-secondary/20 py-2">
-                        <input type="checkbox"> Makanan
+
+                <form action="{{ route('product') }}" method="GET" id="filter-form">
+
+                    <button type="button"
+                        class="categories flex items-center cursor-pointer border-t border-secondary/10 shadow rounded-2xl py-1.5 px-4 bg-neutral transition-all duration-300 group-[.menu-open]:rounded-b-none">
+                        Categories
+                        @if (count($selectedCategories) > 0)
+                            <span
+                                class="bg-primary text-white rounded-full px-2 py-0.5 text-xs ml-2">{{ count($selectedCategories) }}
+                            </span>
+                        @endif
+                        <span
+                            class="icon-[mdi--keyboard-arrow-down] categories-arrow text-xl transition-transform duration-300 ml-2"></span>
+                    </button>
+
+                    <div
+                        class="categories-option absolute flex shadow p-4 gap-2 transition-all duration-300 ease-in-out flex-col opacity-0 invisible -translate-y-2 w-full rounded-b-2xl bg-neutral top-full left-0 group-[.menu-open]:opacity-100 group-[.menu-open]:visible group-[.menu-open]:translate-y-0">
+
+
+                        @foreach ($categories as $category)
+                            <div class="border-b border-secondary/20 py-2">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" name="categories[]" value="{{ $category->id }}"
+                                        class="filter-checkbox" @checked(in_array($category->id, $selectedCategories))>
+                                    {{ $category->name }}
+                                </label>
+                            </div>
+                        @endforeach
+
+                        <button type="submit"
+                            class="bg-primary text-white py-1 mt-2 rounded-lg hover:bg-primary-dark transition">
+                            Apply Filters
+                        </button>
+
                     </div>
-                    <div class="border-b border-secondary/20 py-2">
-                        <input type="checkbox"> Obat
-                    </div>
-                    <div class="border-b border-secondary/20 py-2">
-                        <input type="checkbox"> Mainan
-                    </div>
-                    <div class="py-2 mb-2">
-                        <input type="checkbox"> Peralatan
-                    </div>
-                </div>
+                </form>
 
             </div>
 
         </section>
 
         <section
-            class="h-full grid gap-x-6 gap-6 grid-cols-2 md:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-6 justify-items-start">
-            <x-product.product-item :images="'https://s7d2.scene7.com/is/image/PetSmart/1221784'" :name="'Nyanpasu'" :price="'200000'" :stock="'2000'"
-                :category="'makanan'" :id="'1'" />
-            <x-product.product-item :images="'https://thfvnext.bing.com/th/id/OIP.X3hZ8whEmk6JaZW60ZKPBwHaHa?r=0&o=7&cb=thfvnextfalcon4rm=3&rs=1&pid=ImgDetMain&o=7&rm=3'" :name="'Nyanpasu'" :price="'200000'" :stock="'2000'"
-                :category="'Peralatan'" :id="'2'" />
-            <x-product.product-item :images="'https://images-na.ssl-images-amazon.com/images/I/81iXsuSsv4L.jpg'" :name="'Nyanpasu'" :price="'200000'" :stock="'2000'"
-                :category="'Obat'" :id="'3'" />
-            <x-product.product-item :images="'https://thfvnext.bing.com/th/id/OIP.SF3zfu7maJ7h_TOEidBvdgHaHa?r=0&o=7&cb=thfvnextfalcon4rm=3&rs=1&pid=ImgDetMain&o=7&rm=3'" :name="'Nyanpasu'" :price="'200000'" :stock="'2000'"
-                :category="'Mainan'" :id="'4'" />
-            <x-product.product-item :images="'https://s7d2.scene7.com/is/image/PetSmart/1221784'" :name="'Nyanpasu'" :price="'200000'" :stock="'2000'"
-                :category="'makanan'" :id="'1'" />
-            <x-product.product-item :images="'https://thfvnext.bing.com/th/id/OIP.X3hZ8whEmk6JaZW60ZKPBwHaHa?r=0&o=7&cb=thfvnextfalcon4rm=3&rs=1&pid=ImgDetMain&o=7&rm=3'" :name="'Nyanpasu'" :price="'200000'" :stock="'2000'"
-                :category="'Peralatan'" :id="'2'" />
-            <x-product.product-item :images="'https://images-na.ssl-images-amazon.com/images/I/81iXsuSsv4L.jpg'" :name="'Nyanpasu'" :price="'200000'" :stock="'2000'"
-                :category="'Obat'" :id="'3'" />
-            <x-product.product-item :images="'https://thfvnext.bing.com/th/id/OIP.SF3zfu7maJ7h_TOEidBvdgHaHa?r=0&o=7&cb=thfvnextfalcon4rm=3&rs=1&pid=ImgDetMain&o=7&rm=3'" :name="'Nyanpasu'" :price="'200000'" :stock="'2000'"
-                :category="'Mainan'" :id="'4'" />
-            <x-product.product-item :images="'https://s7d2.scene7.com/is/image/PetSmart/1221784'" :name="'Nyanpasu'" :price="'200000'" :stock="'2000'"
-                :category="'makanan'" :id="'1'" />
-            <x-product.product-item :images="'https://thfvnext.bing.com/th/id/OIP.X3hZ8whEmk6JaZW60ZKPBwHaHa?r=0&o=7&cb=thfvnextfalcon4rm=3&rs=1&pid=ImgDetMain&o=7&rm=3'" :name="'Nyanpasu'" :price="'200000'" :stock="'2000'"
-                :category="'Peralatan'" :id="'2'" />
-            <x-product.product-item :images="'https://images-na.ssl-images-amazon.com/images/I/81iXsuSsv4L.jpg'" :name="'Nyanpasu'" :price="'200000'" :stock="'2000'"
-                :category="'Obat'" :id="'3'" />
-            <x-product.product-item :images="'https://thfvnext.bing.com/th/id/OIP.SF3zfu7maJ7h_TOEidBvdgHaHa?r=0&o=7&cb=thfvnextfalcon4rm=3&rs=1&pid=ImgDetMain&o=7&rm=3'" :name="'Nyanpasu'" :price="'200000'" :stock="'2000'"
-                :category="'Mainan'" :id="'4'" />
-            <x-product.product-item :images="'https://thfvnext.bing.com/th/id/OIP.X3hZ8whEmk6JaZW60ZKPBwHaHa?r=0&o=7&cb=thfvnextfalcon4rm=3&rs=1&pid=ImgDetMain&o=7&rm=3'" :name="'Nyanpasu'" :price="'200000'" :stock="'2000'"
-                :category="'Peralatan'" :id="'2'" />
-            <x-product.product-item :images="'https://images-na.ssl-images-amazon.com/images/I/81iXsuSsv4L.jpg'" :name="'Nyanpasu'" :price="'200000'" :stock="'2000'"
-                :category="'Obat'" :id="'3'" />
-            <x-product.product-item :images="'https://thfvnext.bing.com/th/id/OIP.SF3zfu7maJ7h_TOEidBvdgHaHa?r=0&o=7&cb=thfvnextfalcon4rm=3&rs=1&pid=ImgDetMain&o=7&rm=3'" :name="'Nyanpasu'" :price="'200000'" :stock="'2000'"
-                :category="'Mainan'" :id="'4'" />
+            class="h-full grid gap-6 grid-cols-2 md:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-6 justify-items-start">
+            @foreach ($products as $product)
+                <x-product.product-item :images="'https://i.kym-cdn.com/photos/images/newsfeed/002/429/796/96c.gif'" :name="$product->name" :price="$product->formatted_price" :stock="$product->stock"
+                    :category="$product->category->name" :id="$product->id" />
+            @endforeach
         </section>
     </div>
 
