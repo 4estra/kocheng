@@ -47,8 +47,8 @@
                         @foreach ($categories as $category)
                             <div class="border-b border-secondary/20 py-2">
                                 <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="checkbox" name="categories[]" value="{{ $category->id }}"
-                                        class="filter-checkbox" @checked(in_array($category->id, $selectedCategories))>
+                                    <input type="checkbox" name="categories[]" value="{{ $category->slug }}"
+                                        class="filter-checkbox" @checked(in_array($category->slug, $selectedCategories))>
                                     {{ $category->name }}
                                 </label>
                             </div>

@@ -11,9 +11,12 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $query = Product::with('category');
+        $selectedCategories = $request->input('categories', []);
 
-        if ($request->has('categories')) {
-            $query->whereIn('category_id', $request->categories);
+        if (!empty($selectedCategories)) {
+            $query->whereHas('category', function ($q) use ($selectedCategories) {
+                $q->whereIn('slug', $selectedCategories);
+            });
         }
 
         $products = $query->get();
@@ -49,6 +52,5 @@ class ProductController extends Controller
         ]);
 
         return redirect()->route('dashboard.index');
-
     }
 }
